@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{tikz,graphicx,bm,times}
+\usepackage[active,tightpage]{preview}
+\PreviewBorder=0pt
+\PreviewEnvironment{tikzpicture}
+
+\usetikzlibrary{arrows,positioning} 
+\tikzset{>=latex}
+
+
+\tikzset{
+    >=stealth',
+    punkt/.style={
+           rectangle,
+           fill=white,
+           rounded corners,
+           draw=black, very thick,
+           minimum height=2em,
+           text centered}
+}
+
+\newcommand{\bracedincludegraphics}[2][]{%
+\sbox0{$\vcenter{\hbox{\includegraphics[#1]{#2}}}$}%
+\left.
+\vphantom{\copy0}
+\kern-\nulldelimiterspace
+\box0\right\rbrace}
+
+\begin{document}
+
+\resizebox{\textwidth}{!}{
+\begin{large}
+\begin{tikzpicture}[node distance=1cm, auto,]
+ \node (original) {\includegraphics{original.pdf}};
+ \node[right=1.5 of original]  (copula) {\includegraphics{copula.pdf}};
+ \node[right=3of copula]       (dummy)  {};
+ \node[above=0.2 of dummy]     (rfxd)   {$\bracedincludegraphics{rfx.pdf}$};
+ \node[below=0.2 of dummy]     (rfyd)   {$\bracedincludegraphics{rfy.pdf}$};
+ \node[right=3 of rfxd]        (fx)     {\includegraphics{fx.pdf}};
+ \node[right=3 of rfyd]        (fy)     {\includegraphics{fy.pdf}};
+ \node[right=9 of dummy]       (final)  {\includegraphics{lines.pdf}};
+ %labels 
+ \node[left=0 of original,rotate=90,anchor=south] (origy)  {$y$};
+ \node[below=0 of original]                       (origx)  {$x$};
+ \node[left=0 of  copula,rotate=90,anchor=south]  (copy)   {$P(y)\sim \mathcal{U}[0,1]$};
+ \node[below=0 of copula]                         (copx)   {$P(x) \sim \mathcal{U}[0,1]$};
+ \node[left=0 of  final,rotate=90,anchor=south]   (finaly) {$\bm \beta^T \bm \Phi(P(y))$};
+ \node[below=0 of final]                          (finalx) {$\bm \alpha^T \bm \Phi(P(x))$};
+ 
+ \node[left=0 of fx,rotate=90,anchor=south] (fxy) {$\bm \alpha^T \bm \Phi(P(x))$};
+ \node[left=0 of fy,rotate=90,anchor=south] (fyy) {$\bm \beta^T \bm \Phi(P(y))$};
+ \node[below=0 of fx]  (fxx)     {$P(x)$};
+ \node[below=0 of fy]  (fyx)     {$P(y)$};
+ \node[below=0 of rfxd]  (rfxdx) {$P(x)$};
+ \node[below=0 of rfyd]  (rfydx) {$P(y)$};
+ \node[left=0 of rfxd,rotate=90,anchor=south] (rfxdy) {$\phi(w_i P(x)+ b_i)$};
+ \node[left=0 of rfyd,rotate=90,anchor=south] (rfydy) {$\phi(m_i P(y)+ l_i)$};
+ % Titles
+ \node[above=0 of original]  (titleoriginal) {$\bm{\rho \approx 0}$};
+ \node[above=0 of copula]    (titlecopula)   {$\bm{\rho \approx 0}$};
+ \node[above=0 of final]     (titlefinal)    {$\bm{\rho \approx 1}$};
+ 
+ % Arrows
+ \draw[->,very thick] (original)      to (copy);
+ \draw[->,very thick] (copula.east)   to (rfxdy.north);
+ \draw[->,very thick] (copula.east)   to (rfydy.north);
+ \draw[->,very thick] (rfxd.east)     to (fxy.north);
+ \draw[->,very thick] (rfyd.east)     to (fyy.north);
+ \draw[->,very thick] (rfxd.east)     to (fyy.north);
+ \draw[->,very thick] (rfyd.east)     to (fxy.north);
+ \draw[->,very thick] (fx.east)       to (finaly);
+ \draw[->,very thick] (fy.east)       to (finaly);
+ 
+ \node[punkt, right=2 of dummy]   (cca)  {CCA};
+\end{tikzpicture}
+\end{large}
+}
+\end{document}
