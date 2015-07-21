@@ -10,7 +10,7 @@ power.cor    = power_cor    = array(NA, c(n_types,n_noise))
 power.dcor   = power_dcor   = array(NA, c(n_types,n_noise))
 power.mine   = power_mine   = array(NA, c(n_types,n_noise))
 power.hsic   = power_hsic   = array(NA, c(n_types,n_noise))
-power.mmdcop = power_mmdcop = array(NA, c(n_types,n_noise))
+power.hsiccop = power_hsiccop = array(NA, c(n_types,n_noise))
 power.kcca   = power_kcca   = array(NA, c(n_types,n_noise))
 power.rdc    = power_rdc    = array(NA, c(n_types,n_noise))
 
@@ -24,7 +24,7 @@ for(ttt in 1:n_types){
     power_dcor   [ttt,nnn] = power.dcor   [ttt,nnn]
     power_mine   [ttt,nnn] = power.mine   [ttt,nnn]
     power_hsic   [ttt,nnn] = power.hsic   [ttt,nnn]
-    power_mmdcop [ttt,nnn] = power.mmdcop [ttt,nnn]
+    power_hsiccop [ttt,nnn] = power.hsiccop [ttt,nnn]
     power_kcca   [ttt,nnn] = power.kcca   [ttt,nnn]
     power_rdc    [ttt,nnn] = power.rdc    [ttt,nnn]
   }
@@ -35,7 +35,7 @@ power.cor    = power_cor
 power.dcor   = power_dcor  
 power.mine   = power_mine  
 power.hsic   = power_hsic  
-power.mmdcop = power_mmdcop
+power.hsiccop = power_hsiccop
 power.kcca   = power_kcca  
 power.rdc    = power_rdc
 
@@ -49,7 +49,7 @@ power.rdc  <- power_rdc
 # power.dcor  ,
 # power.mine  ,
 # power.hsic  ,
-# power.mmdcop,
+# power.hsiccop,
 # power.kcca  ,
 # power.rdc   ,
 # file = "new_baseline")
@@ -77,7 +77,7 @@ for(typ in c(1,2,3,5,7,8,9,10)) {
   points(xvals,power.mine  [typ,], pch = 3, col = 3, type = 'b')
   points(xvals,power.ace   [typ,], pch = 8, col = 8, type = 'b')
   points(xvals,power.hsic  [typ,], pch = 5, col = 5, type = 'b')
-  points(xvals,power.mmdcop[typ,], pch = 6, col = 6, type = 'b')
+  points(xvals,power.hsiccop[typ,], pch = 6, col = 6, type = 'b')
   points(xvals,power.rdc   [typ,], pch = 4, col = 4, lwd=3,type = 'b')
 
   if(typ==5)

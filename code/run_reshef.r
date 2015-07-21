@@ -10,9 +10,9 @@ nsim      = 500
 n         = 500
 num.noise = 30
 noise     = 3
-val.cor   = val.dcor   = val.mine   = val.ace    = val.mmdcop   = val.hsic   = val.rdc   = rep(NA,nsim)
-val.cor2  = val.dcor2  = val.mine2  = val.ace2   = val.mmdcop2  = val.hsic2  = val.rdc2  = rep(NA,nsim)
-power.cor = power.dcor = power.mine = power.ace  = power.mmdcop = power.hsic = power.rdc = array(NA, c(n_types,num.noise))
+val.cor   = val.dcor   = val.mine   = val.ace    = val.hsiccop   = val.hsic   = val.rdc   = rep(NA,nsim)
+val.cor2  = val.dcor2  = val.mine2  = val.ace2   = val.hsiccop2  = val.hsic2  = val.rdc2  = rep(NA,nsim)
+power.cor = power.dcor = power.mine = power.ace  = power.hsiccop = power.hsic = power.rdc = array(NA, c(n_types,num.noise))
 
 set.seed(1)
 
@@ -32,7 +32,7 @@ for(typ in ttt) {
       val.cor [ii]   = (cor(x,y))^2
       val.mine[ii]   = mine(x,y)$MIC
       val.hsic[ii]   = hsic(x,y)
-      val.mmdcop[ii] = mmdcop(x,y)
+      val.hsiccop[ii] = hsiccop(x,y)
     }
 
     cut.rdc    = quantile(val.rdc ,.95)
@@ -41,7 +41,7 @@ for(typ in ttt) {
     cut.cor    = quantile(val.cor, .95)
     cut.mine   = quantile(val.mine,.95)
     cut.hsic   = quantile(val.hsic ,.95)
-    cut.mmdcop = quantile(val.mmdcop,.95)
+    cut.hsiccop = quantile(val.hsiccop,.95)
 
     for(ii in 1:nsim){
       xy = gentype(typ, n, l, noise, num.noise)
@@ -54,7 +54,7 @@ for(typ in ttt) {
       val.cor2 [ii]   = cor(x,y)^2
       val.mine2[ii]   = mine(x,y)$MIC
       val.hsic2[ii]   = hsic(x,y)
-      val.mmdcop2[ii] = mmdcop(x,y)
+      val.hsiccop2[ii] = hsiccop(x,y)
     }
 
     power.rdc [typ,l]   = sum(val.rdc2  > cut.rdc) /nsim
@@ -63,7 +63,7 @@ for(typ in ttt) {
     power.cor [typ,l]   = sum(val.cor2  > cut.cor) /nsim
     power.mine[typ,l]   = sum(val.mine2 > cut.mine)/nsim
     power.hsic[typ,l]   = sum(val.hsic2 > cut.hsic) /nsim
-    power.mmdcop[typ,l] = sum(val.mmdcop2 > cut.mmdcop) /nsim
+    power.hsiccop[typ,l] = sum(val.hsiccop2 > cut.hsiccop) /nsim
 
     print(paste("Type:", typ, "Noise:", l,
           "ACE:", power.ace [typ,l],
@@ -71,11 +71,11 @@ for(typ in ttt) {
           "DCO:", power.dcor[typ,l],
           "MIC:", power.mine[typ,l],
           "HSI:", power.hsic[typ,l],
-          "MMD:", power.mmdcop[typ,l],
+          "MMD:", power.hsiccop[typ,l],
           "RDC:", power.rdc [typ,l]))
   }
 }
 
-save(power.ace, power.cor, power.dcor, power.mine, power.hsic, power.mmdcop, power.rdc,
+save(power.ace, power.cor, power.dcor, power.mine, power.hsic, power.hsiccop, power.rdc,
      file = paste("result", k1, k2, n, ttt, nnn, sep="_"))
 

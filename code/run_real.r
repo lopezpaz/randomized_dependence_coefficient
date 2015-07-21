@@ -84,7 +84,7 @@ for(di in as.double(commandArgs(TRUE)[1])) {
       Ehsi <- (mean((predict(gausspr(x_tr[1:maxk,Fhsi],y_tr[1:maxk],scaled=NULL),x_te[,Fhsi])-y_te)^2))
   
       # MMDCOP
-      for(i in setdiff(1:ncol(x), Fmmd)) Rmmd[i] <- mmdcop(x_tr[1:maxk,c(Fmmd,i)], y_tr[1:maxk])
+      for(i in setdiff(1:ncol(x), Fmmd)) Rmmd[i] <- hsiccop(x_tr[1:maxk,c(Fmmd,i)], y_tr[1:maxk])
       Fmmd <- c(Fmmd, order(Rmmd,decreasing=TRUE)[1])
       Emmd <- (mean((predict(gausspr(x_tr[1:maxk,Fmmd],y_tr[1:maxk],scaled=NULL),x_te[,Fmmd])-y_te)^2))
       
